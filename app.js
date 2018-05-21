@@ -1,5 +1,5 @@
 if (process.env.NODE_ENV !== 'test') process.env.NODE_ENV = 'dev';
-const { DB_url } = require('./config')
+const { DB_url } = process.env || require('./config')
 const mongoose = require('mongoose');
 const express = require('express');
 const app = express();
