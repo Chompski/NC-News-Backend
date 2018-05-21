@@ -3,17 +3,17 @@ const router = express.Router();
 
 const topicsRoute = require('./api.route.topics');
 const articlesRoute = require('./api.route.articles');
-// const teams = require('./api.route.teams');
-// const circuits = require('./api.route.circuits');
+const commentsRoute = require('./api.route.comments');
+const usersRoute = require('./api.route.users');
 
 
 router.use('/topics', topicsRoute );
 
 router.use('/articles', articlesRoute);
 
-// router.use('/teams', teams);
+router.use('/comments', commentsRoute);
 
-// router.use('/circuits', circuits);
+router.use('/users', usersRoute);
 
 
 module.exports = router;
