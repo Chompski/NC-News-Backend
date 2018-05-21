@@ -36,4 +36,30 @@ describe('API endpoints',() => {
            expect(res.body[0].title).to.equal('Living in the shadow of a great man')
        })
     });
+
+    it('/POST /api/topics/:topic_id/articles', () => {
+        return request
+        .post(`/api/topics/${topicDocs[0]._id}/articles`)
+        .send({"title":"test", "body":"Test"})
+        .then(res =>{
+            expect(res.body._id).to.equal(res.body._id)
+        })
+    });
+
+    it('/GET /api/articles', ()=> {
+        return request
+        .get('/api/articles')
+        .then(res => {
+            expect(res.body.length).to.equal(5)
+            expect(res.body[0].title).to.equal('Living in the shadow of a great man')
+        }) 
+    });
+
+    it('/GET /api/articles/article_id', ()=> {
+        return request
+        .get(`/api/articles/${articleDocs[0]._id}`)
+        .then(res => {
+            expect(res.body.title).to.equal('Living in the shadow of a great man')
+        }) 
+    });
 })
