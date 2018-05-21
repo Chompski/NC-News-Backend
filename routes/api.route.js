@@ -6,7 +6,6 @@ const articlesRoute = require('./api.route.articles');
 const commentsRoute = require('./api.route.comments');
 const usersRoute = require('./api.route.users');
 
-
 router.use('/topics', topicsRoute );
 
 router.use('/articles', articlesRoute);

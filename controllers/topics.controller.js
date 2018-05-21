@@ -1,29 +1,25 @@
 const { Article, Comment, Topic, User } = require('../models');
 
-function getTopics(req, res) {
+function getTopics(req, res, next) {
     Topic
         .find({})
         .then(topics => {
             return res.status(200).send(topics);
         })
-        .catch(err => {
-            console.log(err)
-        })
+        .catch(next)
 }
 
-function getTopicArticles(req, res) {
+function getTopicArticles(req, res, next) {
     const id = req.params.topic_id
     Article
         .find({ belongs_to: id })
         .then(articles => {
             return res.status(200).send(articles);
         })
-        .catch(err => {
-            console.log(err)
-        })
+        .catch(next)
 }
 
-function postTopicArticles(req, res) {
+function postTopicArticles(req, res, next) {
     const id = req.params.topic_id
     const { body, title } = req.body
 
@@ -37,9 +33,7 @@ function postTopicArticles(req, res) {
                 .then(article => {
                     return res.status(200).send(article);
                 })
-                .catch(err => {
-                    console.log(err)
-                })
+                .catch(next)
         })
 }
 

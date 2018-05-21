@@ -1,15 +1,20 @@
 const { Article, Comment, Topic, User } = require('../models');
 
-function getUser(req, res) {
+function getUser(req, res, next) {
     const user = req.params.username
     User
-        .find({username:user})
+        .find({ username: user })
         .then(articles => {
-            return res.status(200).send(articles);
+            if (articles.length > 0) {
+                return res.status(200).send(articles);
+            }
+            else {
+                next({status:404, error: 'User Not Found.'})
+            }
         })
-        .catch(err => {
-            console.log(err)
-        })
+        .catch(next)
 }
+
+
 
 module.exports = { getUser }
