@@ -9,10 +9,14 @@ function getUser(req, res, next) {
                 return res.status(200).send(articles);
             }
             else {
-                next({status:404, error: 'User Not Found.'})
+                throw {status:404}
             }
         })
-        .catch(next)
+        .catch(error => {
+            if (error.status === 404) return next({ status: 404, message:'404 user not found'})
+            
+            if (error.name === "ValidationError") return next({ status: 400, message:'400 bad request'})
+        })
 }
 
 

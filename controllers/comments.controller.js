@@ -4,33 +4,33 @@ function updateCommentsIDVotes(req, res, next) {
     const id = req.params.comment_id
     const rate = req.query.vote
 
-    if (rate === 'up') {
+    let amount = 0
+
+    if (rate === "up") amount = 1
+    if (rate === "down") amount = -1
+
         Comment
-            .findByIdAndUpdate({ _id: id }, { $inc: { votes: 1 } }, { new: true })
+            .findByIdAndUpdate({ _id: id }, { $inc: { votes: amount } }, { new: true })
             .then(comment => {
                 return res.status(200).send(comment);
             })
-            .catch(next)
-    }
-    
-    if (rate === 'down') {
-        Comment
-            .findByIdAndUpdate({ _id: id }, { $inc: { votes: -1 } }, { new: true })
-            .then(comment => {
-                return res.status(200).send(comment);
+            .catch(error =>{
+                if (error.status === 404) return next({status:404, message:'404 comment not found'})
+                if (error.name === "CastError") return next({status:400, message:'400 bad request'})
             })
-            .catch(next)
-    }
 }
 
 function deleteCommentsID(req, res, next) {
     const id = req.params.comment_id
     Comment
-        .findByIdAndRemove({ _id: id })
+        .findByIdAndRemove( id )
         .then(comment => {
             return res.status(200).send('File Deleted');
         })
-        .catch(next)
+        .catch(error =>{
+            if (error.status === 404) return next({status:404, message:'404 comment not found'})
+            if (error.name === "CastError") return next({status:400, message:'400 bad request'})
+        })
 }
 
 module.exports = { updateCommentsIDVotes, deleteCommentsID }

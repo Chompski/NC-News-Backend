@@ -40,9 +40,9 @@ describe('API endpoints', () => {
     it('FAILS /GET /api/topics/:topic_id/articles', () => {
         return request
             .get(`/api/topics/fail/articles`)
+            .expect(400)
             .then(res => {
-                expect(res.status).to.equal(400)
-                expect(res.text).to.equal('Error 400 Bad Request-Invalid ID')
+                expect(res.body.message).to.equal('400 bad request')
             })
     });
 
@@ -59,9 +59,9 @@ describe('API endpoints', () => {
         return request
             .post(`/api/topics/${topicDocs[0]._id}/articles`)
             .send({})
+            .expect(400)
             .then(res => {
-                expect(res.status).to.equal(400)
-                expect(res.text).to.equal('Error 400 Bad Request-Invalid ID')
+                expect(res.body.message).to.equal('400 bad request')
             })
     });
 
@@ -85,9 +85,9 @@ describe('API endpoints', () => {
     it('FAILS /GET /api/articles/article_id/comments', () => {
         return request
             .get(`/api/articles/fail/comments`)
+            .expect(400)
             .then(res => {
-                expect(res.status).to.equal(400)
-                expect(res.text).to.equal('Error 400 Bad Request-Invalid ID')
+                expect(res.body.message).to.equal('400 bad request')
             })
     });
 
@@ -105,9 +105,9 @@ describe('API endpoints', () => {
         return request
             .post(`/api/articles/${articleDocs[0]._id}/comments`)
             .send({ })
+            .expect(400)
             .then(res => {
-                expect(res.status).to.equal(400)
-                expect(res.text).to.equal('Error 400 Bad Request-Invalid ID')
+                expect(res.body.message).to.equal('400 bad request')
             })
     });
 
@@ -163,9 +163,9 @@ describe('API endpoints', () => {
     it('FAILS /GET /api/users/:username', () => {
         return request
             .get(`/api/users/fail`)
+            .expect(404)
             .then(res => {
-                expect(res.status).to.equal(404)
-                expect(res.text).to.equal('User Not Found.')
+                expect(res.body.message).to.equal('404 user not found')
             })
     });
 
