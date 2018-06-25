@@ -7,9 +7,12 @@ const api = require('./utils/api route')
 mongoose.connect(DB_url).then(() => console.log('DB connected'))
 
 const { json } = require('body-parser');
+const cors = require('cors');
 const apiRouter = require('./routes/api.route.js');
 
 app.use(json());
+
+app.use(cors())
 
 app.use('/api', apiRouter);
 
