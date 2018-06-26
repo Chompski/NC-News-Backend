@@ -4,6 +4,8 @@ function getUser(req, res, next) {
     const user = req.params.username
     User
         .find({ username: user })
+        .populate('created_by')
+        .populate('belongs_to')
         .then(articles => {
             if (articles.length > 0) {
                 return res.status(200).send(articles);

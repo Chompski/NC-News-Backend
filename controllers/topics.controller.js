@@ -16,6 +16,8 @@ function getTopicArticles(req, res, next) {
     const id = req.params.topic_id
     Article
         .find({ belongs_to: id })
+        .populate('created_by')
+        .populate('belongs_to')
         .then(articles => {
             return res.status(200).send(articles);
         })

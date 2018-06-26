@@ -26,6 +26,8 @@ function getArticlesID(req, res, next) {
     const id = req.params.article_id
     Article
         .findById(id)
+        .populate('created_by')
+        .populate('belongs_to')
         .then(articles => {
             if (articles === null) throw {status:404}
             return res.status(200).send(articles);
@@ -40,6 +42,8 @@ function getArticlesIDComments(req, res, next) {
     const id = req.params.article_id
     Comment
         .find({ belongs_to: id })
+        .populate('created_by')
+        .populate('belongs_to')
         .then(comments => {
             return res.status(200).send(comments);
         })
