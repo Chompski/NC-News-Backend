@@ -10,9 +10,8 @@ const { json } = require('body-parser');
 const cors = require('cors');
 const apiRouter = require('./routes/api.route.js');
 
+app.use(cors());
 app.use(json());
-
-app.use(cors())
 
 app.use('/api', apiRouter);
 

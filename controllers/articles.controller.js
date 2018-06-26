@@ -2,7 +2,10 @@ const { Article, Comment, Topic, User } = require('../models');
 
 function getArticles(req, res, next) {
     Article
-        .find().lean()
+        .find()
+        .populate('created_by')
+        .populate('belongs_to')
+        .lean()
         .then(articles => {
 
         const promises = articles.map(article =>  Comment.count({ belongs_to: article._id }))
