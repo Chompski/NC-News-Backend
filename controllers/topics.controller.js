@@ -6,9 +6,9 @@ function getTopics(req, res, next) {
         .then(topics => {
             return res.status(200).send(topics);
         })
-        .catch(error =>{
-            if (error.status === 404) return next({status:404, message:'404 topic not found'})
-            if (error.name === "CastError") return next({status:400, message:'400 bad request'})
+        .catch(error => {
+            if (error.status === 404) return next({ status: 404, message: '404 topic not found' })
+            if (error.name === "CastError") return next({ status: 400, message: '400 bad request' })
         })
 }
 
@@ -21,32 +21,32 @@ function getTopicArticles(req, res, next) {
         .then(articles => {
             return res.status(200).send(articles);
         })
-        .catch(error =>{
-            if (error.status === 404) return next({status:404, message:'404 topic not found'})
-            if (error.name === "CastError") return next({status:400, message:'400 bad request'})
-            if (error.name === "ValidationError") return next({status:400, message:'400 bad request'})
+        .catch(error => {
+            if (error.status === 404) return next({ status: 404, message: '404 topic not found' })
+            if (error.name === "CastError") return next({ status: 400, message: '400 bad request' })
+            if (error.name === "ValidationError") return next({ status: 400, message: '400 bad request' })
         })
 }
 
 function postTopicArticles(req, res, next) {
-    const id = req.params.topic_id
+    const belongs_to = req.params.topic_id
     const { body, title } = req.body
 
     User
-        .find()
-        .then(users => {
-            const userID = users[0]._id
+        .findOne()
+        .then(user => {
+            const created_by = user._id
 
-            Article
-                .create({ title: title, belongs_to: id, body: body, created_by: userID })
-                .then(article => {
-                    return res.status(200).send(article);
-                })
-                .catch(error =>{
-                    if (error.status === 404) return next({status:404, message:'404 topic not found'});
-                    if (error.name === "CastError") return next({status:400, message:'400 bad request'});
-                    if (error.name === "ValidationError") return next({status:400, message:'400 bad request'})
-                })
+            return Promise.all([Article
+                .create({title, belongs_to, body, created_by }),user])
+        })
+        .then(([article, user]) => {
+            return res.status(200).send({...article.toObject(),created_by:user});
+        })
+        .catch(error => {
+            if (error.status === 404) return next({ status: 404, message: '404 topic not found' });
+            if (error.name === "CastError") return next({ status: 400, message: '400 bad request' });
+            if (error.name === "ValidationError") return next({ status: 400, message: '400 bad request' })
         })
 }
 
