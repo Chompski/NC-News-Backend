@@ -38,10 +38,10 @@ function postTopicArticles(req, res, next) {
             const created_by = user._id
 
             return Promise.all([Article
-                .create({title, belongs_to, body, created_by }),user])
+                .create({ title, belongs_to, body, created_by }), user])
         })
         .then(([article, user]) => {
-            return res.status(200).send({...article.toObject(),created_by:user});
+            return res.status(200).send({ ...article.toObject(), created_by: user });
         })
         .catch(error => {
             if (error.status === 404) return next({ status: 404, message: '404 topic not found' });
