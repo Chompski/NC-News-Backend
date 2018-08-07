@@ -1,5 +1,5 @@
-# Northcoders News
-
+# Northcoders News Back-End
+The backend for the Northcoders news site,
 A discussion based web-app that allows users to sign up and contribute content, it is easy to navigate and covers a range of user based topics.
 
 ### Prerequisites
@@ -27,7 +27,7 @@ From your command line:
 $ git clone xxx
 
 # Go into the repository
-$ cd nc-news
+$ cd NC-News-Backend
 
 # Install dependencies
 $ npm i
@@ -40,16 +40,11 @@ $ npm run dev
 ```
 
 ## Running the tests
-
-
-
-### Break down into end to end tests
-
-
+npm run tests
 
 ## Deployment
-
-
+Hosted : https://mathew-nc-news.herokuapp.com/api
+via Heroku
 
 ## Built With
 The main building-blocks are:
